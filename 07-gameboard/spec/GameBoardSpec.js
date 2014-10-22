@@ -81,11 +81,16 @@ describe("GameBoardSpec", function () {
     var foo = new GameBoard();
 
     it("GameBoard.add", function () {
-        var object = {};       
+        var object = {};
         foo.add(object);
         expect(object.board).toBe(foo);
     });
-
+    it("GameBoard.overlap", function () {
+        var dummy1 = { sx: 0, sy: 0, w: 1, h: 1};
+        var dummy2 = { sx: 10, sy: 10, w: 1, h: 1};
+        foo.overlap(dummy1, dummy2);
+        expect(foo.overlap(dummy1, dummy2)).toBe(dummy1.sx < dummy2.sx);
+    });
 
 
 
