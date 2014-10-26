@@ -89,14 +89,40 @@ describe("GameBoardSpec", function () {
     });
     it("GameBoard.remove", function ()
     {
-        var object1 = {};
-        foo.add(object1);       
-        expect(foo.objects.indexOf(object1)).toBe(1); //Confirmamos que el objeto se a añadido a la lista
+        var dummy1 = {};
+        foo.add(dummy1);
+        expect(foo.objects.indexOf(dummy1)).toBe(1); //Confirmamos que el objeto se a añadido a la lista
         foo.resetRemoved();                         //Inicializamos la lista de borrado
-        foo.remove(object1);                        //Marcamos el objeto1 para borrarlo.
-        expect(foo.objects.indexOf(object1)).toBe(1); //Aqui Todavia no hemos borrado el elemento
+        foo.remove(dummy1);                        //Marcamos el objeto1 para borrarlo.
+        expect(foo.objects.indexOf(dummy1)).toBe(1); //Aqui Todavia no hemos borrado el elemento
         foo.finalizeRemoved();                      //Una vez pasamos el finalizeRemove, nos desaparece de la lista el valor.
-        expect(foo.objects.indexOf(object1)).toBe(-1);  //Comprobamos que la lista no tiene ningun elemento.
+        expect(foo.objects.indexOf(dummy1)).toBe(-1);  //Comprobamos que la lista no tiene ningun elemento.
     });
+    it("GameBoard.detect", function () {
+        var foo = new GameBoard();
+        function dummy()
+        {
+            this.step = function()
+            {
+
+            }
+        };
+
+
+        var o1 = new dummy();
+        var o2 = new dummy();
+        var o3 = new dummy();
+        foo.add(o1);
+        foo.add(o2);
+        foo.add(o3);
+        spyOn(o1, "step");
+        spyOn(o2, "step");
+        spyOn(o3, "step");
+        foo.iterate("step", 1.0);
+        foo.detect("step");
+
+    });
+
+
 
 });
