@@ -101,26 +101,19 @@ var PlayerShip = function() {
     this.y = Game.height - 10 - this.h;
     this.vx = 0;
     this.vy = 0;
-
+    this.activado = false;
     this.reloadTime = 0.25;  // Un cuarto de segundo para poder volver a disparar
     this.reload = this.reloadTime;
-
     this.maxVel = 200;
+    this.disparos = false
     this.maxVel = 200;
     this.step = function(dt) {
 	if(Game.keys['left']) { this.vx = -this.maxVel; }
 	else if (Game.keys['right']) { this.vx = this.maxVel; }
-	else if (Game.keys['down']) { this.vy = -this.maxVel; }
-	else if (Game.keys['up']) { this.vy = this.maxVel; }
 	else { this.vx = 0; this.vy = 0;}
 
 	this.x += this.vx * dt;
-	this.y -= this.vy * dt;
 
-	if (this.y < 0) { this.y = 0; }
-	else if (this.y > Game.height - this.h) {
-	    this.y = Game.height - this.h
-	}
 
 	if(this.x < 0) { this.x = 0; }
 	else if(this.x > Game.width - this.w) { 
@@ -128,16 +121,21 @@ var PlayerShip = function() {
 	}
 
 	this.reload -= dt;
+     
 
-	if(Game.keys['fire'] && this.reload < 0) {
+	 if (Game.keys['fire'] && this.disparos == false) {
 	    // Esta pulsada la tecla de disparo y ya ha pasado el tiempo reload
-	    Game.keys['fire'] = false;
-	    this.reload = this.reloadTime;
-
+	    Game.keys['fire'] = true;
+	    // this.reload = this.reloadTime;
+	    this.disparos = true;
 	    // Se añaden al gameboard 2 misiles 
-	    this.board.add(new PlayerMissile(this.x,this.y+this.h/2));
-	    this.board.add(new PlayerMissile(this.x+this.w,this.y+this.h/2));
+	    this.board.add(new PlayerMissile(this.x, this.y + this.h / 2));
+	    this.board.add(new PlayerMissile(this.x + this.w, this.y + this.h / 2));
+
 	}
+	else if (!Game.keys['fire'])
+	    this.disparos = false;
+
     }
 
     this.draw = function(ctx) {
