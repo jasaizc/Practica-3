@@ -115,19 +115,5 @@ describe("GameBoardSpec", function () {
         expect(o2.prueba).toHaveBeenCalledWith(1);
         expect(o3.prueba).toHaveBeenCalledWith(1);
     });
-    it("GameBoard.detect", function () {
-        var foo = new GameBoard();
-        function Dummy(){this.prueba = function(){}};
-        var o1 = new Dummy();
-        var o2 = new Dummy();
-        var o3 = new Dummy();
-        spyOn(o1, "prueba");
-        spyOn(o2, "prueba");
-        spyOn(o3, "prueba");
-        foo.add(o1);
-        foo.add(o2);
-        foo.add(o3);
-        foo.detect("prueba");
-
-    });
+   
 });
