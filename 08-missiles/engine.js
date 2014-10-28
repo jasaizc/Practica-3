@@ -209,8 +209,9 @@ var GameBoard = function() {
         // Convertimos en un array args (1..)
         var args = Array.prototype.slice.call(arguments, 1);
         this.objects.forEach(function (obj) { obj[funcName].apply(obj, args) });
-
     };
+
+
 
     // Devuelve el primer objeto de objects para el que func es true
     this.detect = function (func) {
